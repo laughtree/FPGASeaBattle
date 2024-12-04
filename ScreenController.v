@@ -6,20 +6,26 @@ module ScreenController(
     output vsync
     );
 
-    wire clk_div22;
+    wire clk_div25MHz;
     wire valid;
     wire [9:0] h_cnt, v_cnt;
     wire [12:0] pixel_addr;
     wire [11:0] data;
     wire [11:0] pixel;
+    wire [11:0] pixel_test;
+    integer position;
 
-    clock_divider #(.n(22))clk22(
+    always @* begin
+        position = (h_cnt<80 || h_cnt >= 560) ?-1 :(h_cnt-80)/40 + v_cnt/40*12; 
+    end
+
+    clock_divider #(.n(2))clk2(
         .clk(clk),
-        .clk_div(clk_div22)
+        .clk_div(clk_div25MHz)
     );
 
     vga_controller vga(
-        .pclk(clk_div22),
+        .pclk(clk_div25MHz),
         .reset(rst),
         .hsync(hsync),
         .vsync(vsync),
@@ -31,7 +37,7 @@ module ScreenController(
     pixel_addr_gen pag(
         .h_cnt(h_cnt),
         .v_cnt(v_cnt),
-        .part(1),
+        .part(3'b101),
         .pixel_addr(pixel_addr)
     );
 
@@ -39,9 +45,11 @@ module ScreenController(
         .clka(clk),
         .wea(0),
         .addra(pixel_addr),
-        .dina(data),
+        .dina(data[11:0]),
         .douta(pixel)
     );
 
-    assign vgaRGB = (h_cnt < 40 && v_cnt < 40) ?pixel :12'b0;
+    assign pixel_test = (h_cnt%40 == 0 || h_cnt%40 == 39 || v_cnt%40 == 0 || v_cnt%40 == 39) ?12'h900 :12'hFFF;
+
+    assign vgaRGB = (valid && h_cnt >= 40 && h_cnt < 80 && v_cnt >= 40 && v_cnt < 80) ?pixel :12'h0;
 endmodule

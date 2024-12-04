@@ -1,13 +1,13 @@
 module main(
     input wire clk,
     input wire rst,
-    inout PS2_CLK,
-    inout PS2_DATA,
-    output wire [3:0] VGA_R,
-    output wire [3:0] VGA_G,
-    output wire [3:0] VGA_B,
-    output wire HSYNC,
-    output wire VSYNC
+    inout wire PS2_CLK,
+    inout wire PS2_DATA,
+    output [3:0] VGA_R,
+    output [3:0] VGA_G,
+    output [3:0] VGA_B,
+    output HSYNC,
+    output VSYNC
     );
 
     FSM FSM_inst (
