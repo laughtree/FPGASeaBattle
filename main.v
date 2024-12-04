@@ -59,6 +59,7 @@ module main(
         .x(x),
         .y(y),
         .side(side),
+        .raw_map(raw_map),
         .vgaRGB({VGA_R, VGA_G, VGA_B}),
         .hsync(HSYNC),
         .vsync(VSYNC)

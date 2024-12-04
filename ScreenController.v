@@ -4,6 +4,7 @@ module ScreenController(
     input [3:0] x,
     input [3:0] y,
     input side,
+    input [575:0] raw_map,
     output [11:0] vgaRGB,
     output hsync,
     output vsync
@@ -21,12 +22,18 @@ module ScreenController(
     wire [2:0] part;
     integer position, i;
 
-    initial begin
-        for(i=0; i<144; i = i+1)
-            map[i] = 4'b0000;
-        map[4] = 4'b0010;
-        map[64] = 4'b1100;
+    always @ (*) begin
+        for(i = 0;i < 144;i = i + 1) begin
+            map[i] = {raw_map[i * 4], raw_map[i * 4 + 1], raw_map[i * 4 + 2], raw_map[i * 4 + 3]};
+        end
     end
+
+    // initial begin
+    //     for(i=0; i<144; i = i+1)
+    //         map[i] = 4'b0000;
+    //     map[4] = 4'b0010;
+    //     map[64] = 4'b1100;
+    // end
 
     always @(posedge clk) begin
         position <= (h_cnt<80 || h_cnt >= 560) ?-1 :(h_cnt-80)/40 + v_cnt/40*12; 
