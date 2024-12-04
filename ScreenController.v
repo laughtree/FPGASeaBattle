@@ -12,7 +12,6 @@ module ScreenController(
     wire [12:0] pixel_addr;
     wire [11:0] data;
     wire [11:0] pixel;
-    wire [11:0] pixel_test;
     integer position;
 
     always @* begin
@@ -49,7 +48,9 @@ module ScreenController(
         .douta(pixel)
     );
 
-    assign pixel_test = (h_cnt%40 == 0 || h_cnt%40 == 39 || v_cnt%40 == 0 || v_cnt%40 == 39) ?12'h900 :12'hFFF;
-
-    assign vgaRGB = (valid && h_cnt >= 40 && h_cnt < 80 && v_cnt >= 40 && v_cnt < 80) ?pixel :12'h0;
+    assign vgaRGB = valid 
+    ? (h_cnt < 80 || h_cnt >= 560 || h_cnt%40 == 0 || h_cnt%40 == 39 || v_cnt%40 == 0 || v_cnt%40 == 39) 
+        ?12'hFB4
+        :pixel
+    : 12'h0;
 endmodule
