@@ -1,6 +1,9 @@
 module ScreenController(
     input clk,
     input rst,
+    input [3:0] x,
+    input [3:0] y,
+    input side,
     output [11:0] vgaRGB,
     output hsync,
     output vsync
@@ -69,7 +72,9 @@ module ScreenController(
     ? (h_cnt < 80 || h_cnt >= 560 || h_cnt%40 == 0 || h_cnt%40 == 39 || v_cnt%40 == 0 || v_cnt%40 == 39 || ((h_cnt%40 == 1 || h_cnt%40 == 38) && (v_cnt%40 == 1 || v_cnt % 40 == 38))) 
         ?12'hFB4
         :(pixel == 12'hFFF || map[position] == 4'b0000)
-            ?12'hA70
+            ?(((((h_cnt - 80) / 40) == x) && ((v_cnt / 40) == y)) 
+                ?{4'hD - ((side == 0) * 3), 4'hA, 4'h3 - ((side == 1) * 3)}
+                :12'hA70)
             :render
     : 12'h0;
 endmodule

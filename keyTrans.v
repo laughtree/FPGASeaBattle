@@ -25,17 +25,19 @@ module keyTrans(
     parameter [8:0] KEY_A = 9'h1C;
     parameter [8:0] KEY_S = 9'h1B;
     parameter [8:0] KEY_D = 9'h23;
-    parameter [8:0] ENTER = 9'h5A;
+    parameter [8:0] KEY_ENTER = 9'h5A;
+    parameter [8:0] KEY_SPACE = 9'h29;
 
     reg [3:0] last_key;
     always @ (*) begin
         case(last_change)
-            ENTER: last_key = 0;
-            KEY_W: last_key = 1;
-            KEY_A: last_key = 2;
-            KEY_S: last_key = 3;
-            KEY_D: last_key = 4;
-            default: last_key = 15;
+            KEY_ENTER: last_key = 1;
+            KEY_W: last_key = 2;
+            KEY_A: last_key = 3;
+            KEY_S: last_key = 4;
+            KEY_D: last_key = 5;
+            KEY_SPACE: last_key = 6;
+            default: last_key = 0;
         endcase
     end
 
@@ -46,7 +48,11 @@ module keyTrans(
         end else begin
             prev_key_num <= key_num;
             if (key_valid) begin
-                key_num <= last_key;
+                if(key_down[last_change]) begin
+                    key_num <= last_key;
+                end
+                else
+                    key_num <= 0;
             end
         end
     end

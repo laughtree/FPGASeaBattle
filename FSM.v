@@ -1,6 +1,10 @@
 module FSM(
     input clk,
-    input rst
+    input rst,
+    input [3:0] key_num,
+    input actionDone,
+    input gameover,
+    output reg [2:0] state
 );
 
 parameter [2:0] INIT = 3'b000;
@@ -11,24 +15,6 @@ parameter [2:0] PLAYERB_ATTACK = 3'b100;
 parameter [2:0] FIN = 3'b101;
 
 reg [2:0] next_state;
-reg [2:0] state;
-
-keyTrans KT(
-    .clk(clk),
-    .rst(rst),
-    .state(state),
-    .key_num(key_num),
-    .prev_key_num(prev_key_num)
-);
-
-wire setDone;
-gameController GC(
-    .clk(clk),
-    .state(state),
-    .key(key),
-    .prev_key(prev_key),
-    .setDone(setDone)
-);
 
 always @ (posedge clk or posedge rst) state <= rst ? INIT : next_state;
 
@@ -38,19 +24,19 @@ always @ (*) begin
             next_state = PLAYERA_SET;
         end
         PLAYERA_SET: begin
-            next_state = (setDone && key == 0) ? PLAYERB_SET : PLAYERA_SET;
+            next_state = (actionDone && key_num == 1) ? PLAYERB_SET : PLAYERA_SET;
         end
         PLAYERB_SET: begin
-            next_state = (setDone && key == 0) ? PLAYERA_ATTACK : PLAYERB_SET;
+            next_state = (actionDone && key_num == 1) ? PLAYERA_ATTACK : PLAYERB_SET;
         end
         PLAYERA_ATTACK: begin
-            next_state = PLAYERB_ATTACK;
+            next_state = gameover ? FIN : actionDone ? PLAYERB_ATTACK : PLAYERA_ATTACK;
         end
         PLAYERB_ATTACK: begin
-            next_state = FIN;
+            next_state = gameover ? FIN : actionDone ? PLAYERA_SET : PLAYERB_ATTACK;
         end
         FIN: begin
-            next_state = INIT;
+            next_state = key_num == 1 ? INIT : FIN;
         end
         default: begin
             next_state = INIT;
