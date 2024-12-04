@@ -90,165 +90,200 @@ always @ (*) begin
     end
     if(direction == 0) begin // vertical
         if(setShipCount % 5 == 0) begin // ship len = 2
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 1;
+            if(y < 10) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 1;
 
-            ship_gen[(y + 1) * 48 + x * 4] <= side;
-            ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
-            ship_gen[(y + 1) * 48 + x * 4 + 2] <= 0;
-            ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 1) * 48 + x * 4] <= side;
+                ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
+                ship_gen[(y + 1) * 48 + x * 4 + 2] <= 0;
+                ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
+            end
         end
         else if(setShipCount % 5 == 1 || setShipCount % 5 == 2) begin // ship len = 3
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 1;
-            
-            ship_gen[(y + 1) * 48 + x * 4] <= side;
-            ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
-            ship_gen[(y + 1) * 48 + x * 4 + 2] <= 1;
-            ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
+            if(y < 9) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 1;
+                
+                ship_gen[(y + 1) * 48 + x * 4] <= side;
+                ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
+                ship_gen[(y + 1) * 48 + x * 4 + 2] <= 1;
+                ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[(y + 2) * 48 + x * 4] <= side;
-            ship_gen[(y + 2) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
-            ship_gen[(y + 2) * 48 + x * 4 + 2] <= 0;
-            ship_gen[(y + 2) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 2) * 48 + x * 4] <= side;
+                ship_gen[(y + 2) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
+                ship_gen[(y + 2) * 48 + x * 4 + 2] <= 0;
+                ship_gen[(y + 2) * 48 + x * 4 + 3] <= 0;
+            end
         end
         else if(setShipCount % 5 == 3) begin // ship len = 4
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 1;
+            if(y < 8) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 1;
 
-            ship_gen[(y + 1) * 48 + x * 4] <= side;
-            ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
-            ship_gen[(y + 1) * 48 + x * 4 + 2] <= 1;
-            ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 1) * 48 + x * 4] <= side;
+                ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
+                ship_gen[(y + 1) * 48 + x * 4 + 2] <= 1;
+                ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[(y + 2) * 48 + x * 4] <= side;
-            ship_gen[(y + 2) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
-            ship_gen[(y + 2) * 48 + x * 4 + 2] <= 1;
-            ship_gen[(y + 2) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 2) * 48 + x * 4] <= side;
+                ship_gen[(y + 2) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
+                ship_gen[(y + 2) * 48 + x * 4 + 2] <= 1;
+                ship_gen[(y + 2) * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[(y + 3) * 48 + x * 4] <= side;
-            ship_gen[(y + 3) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
-            ship_gen[(y + 3) * 48 + x * 4 + 2] <= 0;
-            ship_gen[(y + 3) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 3) * 48 + x * 4] <= side;
+                ship_gen[(y + 3) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
+                ship_gen[(y + 3) * 48 + x * 4 + 2] <= 0;
+                ship_gen[(y + 3) * 48 + x * 4 + 3] <= 0;
+            end
         end
         else if(setShipCount % 5 == 4) begin // ship len = 5
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 1;
+            if(y < 7) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b011 -> 正垂直頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 1;
 
-            ship_gen[(y + 1) * 48 + x * 4] <= side;
-            ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
-            ship_gen[(y + 1) * 48 + x * 4 + 2] <= 1;
-            ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 1) * 48 + x * 4] <= side;
+                ship_gen[(y + 1) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
+                ship_gen[(y + 1) * 48 + x * 4 + 2] <= 1;
+                ship_gen[(y + 1) * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[(y + 2) * 48 + x * 4] <= side;
-            ship_gen[(y + 2) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
-            ship_gen[(y + 2) * 48 + x * 4 + 2] <= 1;
-            ship_gen[(y + 2) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 2) * 48 + x * 4] <= side;
+                ship_gen[(y + 2) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
+                ship_gen[(y + 2) * 48 + x * 4 + 2] <= 1;
+                ship_gen[(y + 2) * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[(y + 3) * 48 + x * 4] <= side;
-            ship_gen[(y + 3) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
-            ship_gen[(y + 3) * 48 + x * 4 + 2] <= 1;
-            ship_gen[(y + 3) * 48 + x * 4 + 3] <= 0;
+                ship_gen[(y + 3) * 48 + x * 4] <= side;
+                ship_gen[(y + 3) * 48 + x * 4 + 1] <= 1; // 3'b110 -> 垂直中間
+                ship_gen[(y + 3) * 48 + x * 4 + 2] <= 1;
+                ship_gen[(y + 3) * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[(y + 4) * 48 + x * 4] <= side;
-            ship_gen[(y + 4) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
-            ship_gen[(y + 4) * 48 + x * 4 + 2] <= 0;
-            ship_gen[(y + 4) * 48 + x * 4 + 3] <= 0;
-        end 
+                ship_gen[(y + 4) * 48 + x * 4] <= side;
+                ship_gen[(y + 4) * 48 + x * 4 + 1] <= 1; // 3'b100 -> 反垂直頭
+                ship_gen[(y + 4) * 48 + x * 4 + 2] <= 0;
+                ship_gen[(y + 4) * 48 + x * 4 + 3] <= 0;
+            end
+        end
     end
     else begin // horizontal
         if(setShipCount % 5 == 0) begin // ship len = 2
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 0;
+            if(x < 10) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[y * 48 + (x + 1) * 4] <= side;
-            ship_gen[y * 48 + (x + 1) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
-            ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 1) * 4] <= side;
+                ship_gen[y * 48 + (x + 1) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
+                ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
+            end
         end
         else if(setShipCount % 5 == 1 || setShipCount % 5 == 2) begin // ship len = 3
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 0;
+            if(x < 9) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[y * 48 + (x + 1) * 4] <= side;
-            ship_gen[y * 48 + (x + 1) * 4 + 1] <= 1; // 3'b101 -> 水平中間
-            ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 1) * 4] <= side;
+                ship_gen[y * 48 + (x + 1) * 4 + 1] <= 1; // 3'b101 -> 水平中間
+                ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
 
-            ship_gen[y * 48 + (x + 2) * 4] <= side;
-            ship_gen[y * 48 + (x + 2) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
-            ship_gen[y * 48 + (x + 2) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 2) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 2) * 4] <= side;
+                ship_gen[y * 48 + (x + 2) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
+                ship_gen[y * 48 + (x + 2) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 2) * 4 + 3] <= 1;
+            end
         end
         else if(setShipCount % 5 == 3) begin // ship len = 4
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 0;
+            if(x < 8) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[y * 48 + (x + 1) * 4] <= side;
-            ship_gen[y * 48 + (x + 1) * 4 + 1] <= 1; // 3'b101 -> 水平中間
-            ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 1) * 4] <= side;
+                ship_gen[y * 48 + (x + 1) * 4 + 1] <= 1; // 3'b101 -> 水平中間
+                ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
 
-            ship_gen[y * 48 + (x + 2) * 4] <= side;
-            ship_gen[y * 48 + (x + 2) * 4 + 1] <= 1; // 3'b101 -> 水平中間
-            ship_gen[y * 48 + (x + 2) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 2) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 2) * 4] <= side;
+                ship_gen[y * 48 + (x + 2) * 4 + 1] <= 1; // 3'b101 -> 水平中間
+                ship_gen[y * 48 + (x + 2) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 2) * 4 + 3] <= 1;
 
-            ship_gen[y * 48 + (x + 3) * 4] <= side;
-            ship_gen[y * 48 + (x + 3) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
-            ship_gen[y * 48 + (x + 3) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 3) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 3) * 4] <= side;
+                ship_gen[y * 48 + (x + 3) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
+                ship_gen[y * 48 + (x + 3) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 3) * 4 + 3] <= 1;
+            end
         end
         else if(setShipCount % 5 == 4) begin // ship len = 5
-            ship_gen[y * 48 + x * 4] <= side;
-            ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
-            ship_gen[y * 48 + x * 4 + 2] <= 1;
-            ship_gen[y * 48 + x * 4 + 3] <= 0;
+            if(x < 7) begin
+                ship_gen[y * 48 + x * 4] <= side;
+                ship_gen[y * 48 + x * 4 + 1] <= 0; // 3'b010 -> 反水平頭
+                ship_gen[y * 48 + x * 4 + 2] <= 1;
+                ship_gen[y * 48 + x * 4 + 3] <= 0;
 
-            ship_gen[y * 48 + (x + 1) * 4] <= side;
-            ship_gen[y * 48 + (x + 1) * 4 + 1] <= 1; // 3'b101 -> 水平中間
-            ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 1) * 4] <= side;
+                ship_gen[y * 48 + (x + 1) * 4 + 1] <= 1; // 3'b101 -> 水平中間
+                ship_gen[y * 48 + (x + 1) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 1) * 4 + 3] <= 1;
 
-            ship_gen[y * 48 + (x + 2) * 4] <= side;
-            ship_gen[y * 48 + (x + 2) * 4 + 1] <= 1; // 3'b101 -> 水平中間
-            ship_gen[y * 48 + (x + 2) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 2) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 2) * 4] <= side;
+                ship_gen[y * 48 + (x + 2) * 4 + 1] <= 1; // 3'b101 -> 水平中間
+                ship_gen[y * 48 + (x + 2) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 2) * 4 + 3] <= 1;
 
-            ship_gen[y * 48 + (x + 3) * 4] <= side;
-            ship_gen[y * 48 + (x + 3) * 4 + 1] <= 1; // 3'b101 -> 水平中間
-            ship_gen[y * 48 + (x + 3) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 3) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 3) * 4] <= side;
+                ship_gen[y * 48 + (x + 3) * 4 + 1] <= 1; // 3'b101 -> 水平中間
+                ship_gen[y * 48 + (x + 3) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 3) * 4 + 3] <= 1;
 
-            ship_gen[y * 48 + (x + 4) * 4] <= side;
-            ship_gen[y * 48 + (x + 4) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
-            ship_gen[y * 48 + (x + 4) * 4 + 2] <= 0;
-            ship_gen[y * 48 + (x + 4) * 4 + 3] <= 1;
+                ship_gen[y * 48 + (x + 4) * 4] <= side;
+                ship_gen[y * 48 + (x + 4) * 4 + 1] <= 0; // 3'b001 -> 正水平頭
+                ship_gen[y * 48 + (x + 4) * 4 + 2] <= 0;
+                ship_gen[y * 48 + (x + 4) * 4 + 3] <= 1;
+            end
         end
     end
 end
+
+wire putable;
+
+assign putable = (setShipCount % 5 == 0 && ((direction == 0 && y < 10) || (direction == 1 && x < 10))) ||
+                 (setShipCount % 5 == 1 && ((direction == 0 && y < 9) || (direction == 1 && x < 9))) ||
+                 (setShipCount % 5 == 2 && ((direction == 0 && y < 9) || (direction == 1 && x < 9))) ||
+                 (setShipCount % 5 == 3 && ((direction == 0 && y < 8) || (direction == 1 && x < 8))) ||
+                 (setShipCount % 5 == 4 && ((direction == 0 && y < 7) || (direction == 1 && x < 7)));
 
 always @ (posedge clk) begin
     if(state >= PLAYERA_SET && state <= PLAYERB_SET) begin
         if(key != prev_key) begin
             if(key == ENTER) begin
-                raw_map <= raw_map | ship_gen;
+                if(setShipCount < maxShipCount && putable) begin
+                    raw_map = raw_map | ship_gen;
+                    setShipCount = setShipCount + 1;
+                    actionDone = setShipCount == maxShipCount;
+                end
             end
         end
+    end
+    else if(state >= PLAYERA_ATTACK && state <= PLAYERB_ATTACK) begin
+    end
+    else begin
+        setShipCount = 0;
+        actionDone = 0;
+        raw_map = 576'b0;
     end
 end
 

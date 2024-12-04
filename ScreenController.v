@@ -80,7 +80,7 @@ module ScreenController(
         ?12'hFB4
         :(pixel == 12'hFFF || map[position] == 4'b0000)
             ?(((((h_cnt - 80) / 40) == x) && ((v_cnt / 40) == y)) 
-                ?{4'hD - ((side == 0) * 3), 4'hA, 4'h3 - ((side == 1) * 3)}
+                ?{4'hD - ((side == 0) * 2), 4'hA, 4'h3 - ((side == 1) * 2)}
                 :12'hA70)
             :render
     : 12'h0;
