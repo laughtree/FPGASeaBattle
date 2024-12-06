@@ -7,7 +7,7 @@ module gameController(
     output reg actionDone,
     output reg [3:0] x,
     output reg [3:0] y,
-    output reg [575:0] raw_map,
+    output wire [575:0] raw_map,
     output reg gameover,
     output reg side
 );
@@ -29,6 +29,9 @@ parameter SPACE = 4'b0110;
 integer setShipCount;
 reg direction;
 reg winner;
+
+reg [575:0] map [1:0];
+assign raw_map = map[side];
 
 always @ (*) begin
     if(state == INIT) begin
@@ -258,32 +261,51 @@ always @ (*) begin
     end
 end
 
-wire putable;
+wire [2:0] ship_len;
+assign ship_len = (setShipCount % 5 == 0) ? 3'b010 : (setShipCount % 5 == 1 || setShipCount % 5 == 2) ? 3'b011 : (setShipCount % 5 == 3) ? 3'b100 : 3'b101;
 
-assign putable = (setShipCount % 5 == 0 && ((direction == 0 && y < 10) || (direction == 1 && x < 10))) ||
-                 (setShipCount % 5 == 1 && ((direction == 0 && y < 9) || (direction == 1 && x < 9))) ||
-                 (setShipCount % 5 == 2 && ((direction == 0 && y < 9) || (direction == 1 && x < 9))) ||
-                 (setShipCount % 5 == 3 && ((direction == 0 && y < 8) || (direction == 1 && x < 8))) ||
-                 (setShipCount % 5 == 4 && ((direction == 0 && y < 7) || (direction == 1 && x < 7)));
+reg putable;
+integer j;
+
+always @ (*) begin
+    putable = (direction == 0 && y + ship_len < 12) || (direction == 1 && x + ship_len < 12);
+    for(j = 0;j < ship_len && putable;j = j + 1) begin
+        if(direction == 0) begin
+            putable = ({map[side][(y + j) * 48 + x * 4], map[side][(y + j) * 48 + x * 4 + 1], map[side][(y + j) * 48 + x * 4 + 2], map[side][(y + j) * 48 + x * 4 + 3]} == 4'b0000);
+        end
+        else begin
+            putable = ({map[side][y * 48 + (x + j) * 4], map[side][y * 48 + (x + j) * 4 + 1], map[side][y * 48 + (x + j) * 4 + 2], map[side][y * 48 + (x + j) * 4 + 3]} == 4'b0000);
+        end
+    end
+end
 
 always @ (posedge clk) begin
-    if(state >= PLAYERA_SET && state <= PLAYERB_SET) begin
+    if(state == PLAYERA_SET || state == PLAYERB_SET) begin
         if(key != prev_key) begin
             if(key == ENTER) begin
                 if(setShipCount < maxShipCount && putable) begin
-                    raw_map = raw_map | ship_gen;
-                    setShipCount = setShipCount + 1;
-                    actionDone = setShipCount == maxShipCount;
+                    map[side] <= map[side] | ship_gen;
+                    setShipCount <= setShipCount + 1;
+                    actionDone <= 0;
+                end
+                else begin
+                    actionDone <= 1;
+                    setShipCount <= 0;
                 end
             end
+            else
+                actionDone <= 0;
         end
+        else
+            actionDone <= 0;
     end
-    else if(state >= PLAYERA_ATTACK && state <= PLAYERB_ATTACK) begin
+    else if(state == PLAYERA_ATTACK || state == PLAYERB_ATTACK) begin
     end
     else begin
-        setShipCount = 0;
-        actionDone = 0;
-        raw_map = 576'b0;
+        setShipCount <= 0;
+        actionDone <= 0;
+        map[0] <= 576'b0;
+        map[1] <= 576'b0;
     end
 end
 

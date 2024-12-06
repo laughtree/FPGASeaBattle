@@ -33,7 +33,7 @@ always @ (*) begin
             next_state = gameover ? FIN : actionDone ? PLAYERB_ATTACK : PLAYERA_ATTACK;
         end
         PLAYERB_ATTACK: begin
-            next_state = gameover ? FIN : actionDone ? PLAYERA_SET : PLAYERB_ATTACK;
+            next_state = gameover ? FIN : actionDone ? PLAYERA_ATTACK : PLAYERB_ATTACK;
         end
         FIN: begin
             next_state = key_num == 1 ? INIT : FIN;
