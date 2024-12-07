@@ -10,13 +10,13 @@ module gameController(
     output wire [3:0] x,
     output wire [3:0] y,
     output reg [575:0] raw_map,
-    output reg gameover,
+    output wire gameover,
     output reg side
 );
 
 integer setShipCount;
 wire direction;
-reg winner;
+wire winner;
 
 reg [575:0] map [1:0];
 reg [575:0] mask [1:0];
@@ -37,6 +37,9 @@ always @ (*) begin
         raw_map = 576'b0;
     end
 end
+
+assign gameover = (mask[!side] ^ map[!side]) == 576'b0;
+assign winner = gameover ? side : ~side;
 
 always @ (*) begin
     if(state == `INIT) begin
@@ -289,10 +292,7 @@ always @ (posedge clk) begin
         if(key != prev_key) begin
             if(key == `ENTER) begin
                 if({map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]} != 4'b0000) begin
-                    mask[!side][y * 48 + x * 4] = 1;
-                    mask[!side][y * 48 + x * 4 + 1] = 1;
-                    mask[!side][y * 48 + x * 4 + 2] = 1;
-                    mask[!side][y * 48 + x * 4 + 3] = 1;
+                    {mask[!side][y * 48 + x * 4], mask[!side][y * 48 + x * 4 + 1], mask[!side][y * 48 + x * 4 + 2], mask[!side][y * 48 + x * 4 + 3]} <= {map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]};
                     actionDone <= 0;
                 end
                 else begin
