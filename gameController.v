@@ -39,7 +39,6 @@ always @ (*) begin
 end
 
 assign gameover = (mask[!side] ^ map[!side]) == 576'b0;
-assign winner = gameover ? side : ~side;
 
 always @ (*) begin
     if(state == `INIT) begin
@@ -310,6 +309,8 @@ always @ (posedge clk) begin
         actionDone <= 0;
         map[0] <= 576'b0;
         map[1] <= 576'b0;
+        mask[0] <= 576'b0;
+        mask[1] <= 576'b0;
     end
 end
 
