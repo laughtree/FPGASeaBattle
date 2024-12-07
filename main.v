@@ -3,6 +3,7 @@ module main(
     input wire rst,
     inout wire PS2_CLK,
     inout wire PS2_DATA,
+    input wire cheat,
     output [3:0] VGA_R,
     output [3:0] VGA_G,
     output [3:0] VGA_B,
@@ -44,12 +45,13 @@ module main(
         .state(state),
         .key(key_num),
         .prev_key(prev_key_num),
-        .maxShipCount(5),
+        .maxShipCount(7),
+        .cheat(cheat),
         .actionDone(actionDone),
+        .gameover(gameover),
         .x(x),
         .y(y),
         .raw_map(raw_map),
-        .gameover(gameover),
         .side(side)
     );
 

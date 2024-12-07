@@ -5,10 +5,11 @@ module gameController(
     input [3:0] key,
     input [3:0] prev_key,
     input [4:0] maxShipCount,
+    input cheat,
     output reg actionDone,
     output wire [3:0] x,
     output wire [3:0] y,
-    output wire [575:0] raw_map,
+    output reg [575:0] raw_map,
     output reg gameover,
     output reg side
 );
@@ -19,11 +20,23 @@ reg winner;
 
 reg [575:0] map [1:0];
 reg [575:0] mask [1:0];
-assign raw_map = (state == `PLAYERA_SET || state == `PLAYERB_SET)
-                ? map[side]
-                : ((state == `PLAYERA_ATTACK || state == `PLAYERB_ATTACK)
-                    ? mask[!side] & map[!side]
-                    : 576'b0);
+always @ (*) begin
+    if(state == `INIT) begin
+        raw_map = 576'b0;
+    end
+    else if(state == `PLAYERA_SET || state == `PLAYERB_SET) begin
+        raw_map = map[side];
+    end
+    else if(state == `PLAYERA_ATTACK || state == `PLAYERB_ATTACK) begin
+        raw_map = cheat ? map[!side] : mask[!side] & map[!side];
+    end
+    else if(state == `FIN) begin
+        raw_map = map[!winner];
+    end
+    else begin
+        raw_map = 576'b0;
+    end
+end
 
 always @ (*) begin
     if(state == `INIT) begin
@@ -58,6 +71,8 @@ wire [2:0] ship_len;
 
 assign ship_len = (setShipCount % 5 == 0) ? 3'b010 : (setShipCount % 5 == 1 || setShipCount % 5 == 2) ? 3'b011 : (setShipCount % 5 == 3) ? 3'b100 : 3'b101;
 
+// 依據現在所選位置預生成船
+// 不知道為什麼切不出去
 always @ (*) begin
     ship_gen = 576'b0;
     if(direction == 0) begin // vertical
@@ -246,13 +261,17 @@ always @ (*) begin
     end
 end
 
+// 攻擊判定
+
 always @ (posedge clk) begin
     if(state == `PLAYERA_SET || state == `PLAYERB_SET) begin
         if(key != prev_key) begin
             if(key == `ENTER) begin
-                if(setShipCount < maxShipCount && putable) begin
-                    map[side] <= map[side] | ship_gen;
-                    setShipCount <= setShipCount + 1;
+                if(setShipCount < maxShipCount) begin
+                    if(putable) begin
+                        map[side] <= map[side] | ship_gen;
+                        setShipCount <= setShipCount + 1;
+                    end
                     actionDone <= 0;
                 end
                 else begin
@@ -267,7 +286,24 @@ always @ (posedge clk) begin
             actionDone <= 0;
     end
     else if(state == `PLAYERA_ATTACK || state == `PLAYERB_ATTACK) begin
-
+        if(key != prev_key) begin
+            if(key == `ENTER) begin
+                if({map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]} != 4'b0000) begin
+                    mask[!side][y * 48 + x * 4] = 1;
+                    mask[!side][y * 48 + x * 4 + 1] = 1;
+                    mask[!side][y * 48 + x * 4 + 2] = 1;
+                    mask[!side][y * 48 + x * 4 + 3] = 1;
+                    actionDone <= 0;
+                end
+                else begin
+                    actionDone <= 1;
+                end
+            end
+            else
+                actionDone <= 0;
+        end
+        else
+            actionDone <= 0;
     end
     else begin
         setShipCount <= 0;
