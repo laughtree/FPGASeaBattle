@@ -71,21 +71,8 @@ posSelection posselect(
 reg [575:0] ship_gen;
 wire [2:0] ship_len;
 
-// reg [8:0] headpos [0:31]; // {side, x, y}
-// reg [8:0] tailpos [0:31]; // {side, x, y}
-
 assign ship_len = (setShipCount % 5 == 0) ? 3'b010 : (setShipCount % 5 == 1 || setShipCount % 5 == 2) ? 3'b011 : (setShipCount % 5 == 3) ? 3'b100 : 3'b101;
 
-// always @ (*) begin
-//     if(direction == 0) begin // vertical
-//         headpos[setShipCount] = {side, x, y};
-//         tailpos[setShipCount] = {side, x, y + ship_len - 1};
-//     end
-//     else begin // horizontal
-//         headpos[setShipCount] = {side, x, y};
-//         tailpos[setShipCount] = {side, x + ship_len - 1, y};
-//     end
-// end
 
 // 依據現在所選位置預生成船
 // 不知道為什麼切不出去

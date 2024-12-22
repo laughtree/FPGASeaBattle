@@ -81,6 +81,18 @@ set_property IOSTANDARD LVCMOS33 [get_ports HSYNC]
 set_property PACKAGE_PIN R19 [get_ports VSYNC]
 set_property IOSTANDARD LVCMOS33 [get_ports VSYNC]
 
+# Pmod Header JB
+# Sch name = JB1
+set_property PACKAGE_PIN A14 [get_ports {state[0]}]
+   set_property IOSTANDARD LVCMOS33 [get_ports {state[0]}]
+# Sch name = JB2
+set_property PACKAGE_PIN A16 [get_ports {state[1]}]
+   set_property IOSTANDARD LVCMOS33 [get_ports {state[1]}]
+# Sch name = JB3
+set_property PACKAGE_PIN B15 [get_ports {state[2]}]
+   set_property IOSTANDARD LVCMOS33 [get_ports {state[2]}]
+
+
 
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 set_property BITSTREAM.CONFIG.SPI_BUSWIDTH 4 [current_design]

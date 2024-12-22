@@ -8,10 +8,10 @@ module main(
     output [3:0] VGA_G,
     output [3:0] VGA_B,
     output HSYNC,
-    output VSYNC
+    output VSYNC,
+    output [2:0] state
     );
 
-    wire [2:0] state;
     wire [3:0] key_num;
     wire [3:0] prev_key_num;
     wire actionDone;
