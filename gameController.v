@@ -93,7 +93,7 @@ always @ (*) begin
     ship_gen = 576'b0;
     if(direction == 0) begin // vertical
         if(setShipCount % 5 == 0) begin // ship len = 2
-            if(y < 10) begin
+            if(y <= 10) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b011 -> 正垂直頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
@@ -106,7 +106,7 @@ always @ (*) begin
             end
         end
         else if(setShipCount % 5 == 1 || setShipCount % 5 == 2) begin // ship len = 3
-            if(y < 9) begin
+            if(y <= 9) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b011 -> 正垂直頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
@@ -124,7 +124,7 @@ always @ (*) begin
             end
         end
         else if(setShipCount % 5 == 3) begin // ship len = 4
-            if(y < 8) begin
+            if(y <= 8) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b011 -> 正垂直頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
@@ -147,7 +147,7 @@ always @ (*) begin
             end
         end
         else if(setShipCount % 5 == 4) begin // ship len = 5
-            if(y < 7) begin
+            if(y <= 7) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b011 -> 正垂直頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
@@ -177,7 +177,7 @@ always @ (*) begin
     end
     else begin // horizontal
         if(setShipCount % 5 == 0) begin // ship len = 2
-            if(x < 10) begin
+            if(x <= 10) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b010 -> 反水平頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
@@ -190,7 +190,7 @@ always @ (*) begin
             end
         end
         else if(setShipCount % 5 == 1 || setShipCount % 5 == 2) begin // ship len = 3
-            if(x < 9) begin
+            if(x <= 9) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b010 -> 反水平頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
@@ -208,7 +208,7 @@ always @ (*) begin
             end
         end
         else if(setShipCount % 5 == 3) begin // ship len = 4
-            if(x < 8) begin
+            if(x <= 8) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b010 -> 反水平頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
@@ -231,7 +231,7 @@ always @ (*) begin
             end
         end
         else if(setShipCount % 5 == 4) begin // ship len = 5
-            if(x < 7) begin
+            if(x <= 7) begin
                 ship_gen[y * 48 + x * 4] = side;
                 ship_gen[y * 48 + x * 4 + 1] = 0; // 3'b010 -> 反水平頭
                 ship_gen[y * 48 + x * 4 + 2] = 1;
