@@ -71,7 +71,21 @@ posSelection posselect(
 reg [575:0] ship_gen;
 wire [2:0] ship_len;
 
+// reg [8:0] headpos [0:31]; // {side, x, y}
+// reg [8:0] tailpos [0:31]; // {side, x, y}
+
 assign ship_len = (setShipCount % 5 == 0) ? 3'b010 : (setShipCount % 5 == 1 || setShipCount % 5 == 2) ? 3'b011 : (setShipCount % 5 == 3) ? 3'b100 : 3'b101;
+
+// always @ (*) begin
+//     if(direction == 0) begin // vertical
+//         headpos[setShipCount] = {side, x, y};
+//         tailpos[setShipCount] = {side, x, y + ship_len - 1};
+//     end
+//     else begin // horizontal
+//         headpos[setShipCount] = {side, x, y};
+//         tailpos[setShipCount] = {side, x + ship_len - 1, y};
+//     end
+// end
 
 // 依據現在所選位置預生成船
 // 不知道為什麼切不出去
@@ -252,7 +266,7 @@ integer j;
 
 // 檢查是否可以放置
 always @ (*) begin
-    putable = (direction == 0 && y + ship_len < 12) || (direction == 1 && x + ship_len < 12);
+    putable = (direction == 0 && y + ship_len - 1 < 12) || (direction == 1 && x + ship_len - 1 < 12);
     for(j = 0;j < ship_len && putable;j = j + 1) begin
         if(direction == 0) begin
             putable = ({map[side][(y + j) * 48 + x * 4], map[side][(y + j) * 48 + x * 4 + 1], map[side][(y + j) * 48 + x * 4 + 2], map[side][(y + j) * 48 + x * 4 + 3]} == 4'b0000);
