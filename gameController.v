@@ -310,6 +310,14 @@ always @ (posedge clk) begin
         else
             actionDone <= 0;
     end
+    else if(state == `FIN) begin
+        setShipCount <= 0;
+        actionDone <= 0;
+        mask[0] <= 576'b0;
+        mask[1] <= 576'b0;
+        map[0] <= map[0];
+        map[1] <= map[1];
+    end
     else begin
         setShipCount <= 0;
         actionDone <= 0;
