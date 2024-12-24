@@ -83,7 +83,7 @@ module ScreenController(
         :(pixel == 12'hFFF || map[position] == 4'b0000 || map[position] == 4'b1111)
             ?(((((h_cnt - 80) / 40) == x) && ((v_cnt / 40) == y) && (state == `PLAYERA_SET || state == `PLAYERB_SET || state == `PLAYERA_ATTACK || state == `PLAYERB_ATTACK)) 
                 ?{4'hD - ((side == 0) * 1), 4'hA, 4'h3 - ((side == 1) * 1)}
-                :(map[position] == 4'b1111 ? {4'hC - (state == `FIN && side == 0), 4'h9, 4'h2 - (state == `FIN && side == 1)} : {4'hA + (state == `FIN && side == 1), 4'h7, 4'h0 - (state == `FIN && side == 0)}))
+                :{4'hC - (state == `FIN && side == 0), 4'h9, 4'h2 - (state == `FIN && side == 1)})
             :render
     : 12'h0;
 endmodule
