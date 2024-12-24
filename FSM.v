@@ -18,10 +18,10 @@ always @ (*) begin
             next_state = `PLAYERA_SET;
         end
         `PLAYERA_SET: begin
-            next_state = (actionDone && key_num == 1) ? `PLAYERB_SET : `PLAYERA_SET;
+            next_state = (actionDone && key_num == `ENTER) ? `PLAYERB_SET : `PLAYERA_SET;
         end
         `PLAYERB_SET: begin
-            next_state = (actionDone && key_num == 1) ? `PLAYERA_ATTACK : `PLAYERB_SET;
+            next_state = (actionDone && key_num == `ENTER) ? `PLAYERA_ATTACK : `PLAYERB_SET;
         end
         `PLAYERA_ATTACK: begin
             next_state = gameover ? `FIN : actionDone ? `PLAYERB_ATTACK : `PLAYERA_ATTACK;
@@ -30,7 +30,7 @@ always @ (*) begin
             next_state = gameover ? `FIN : actionDone ? `PLAYERA_ATTACK : `PLAYERB_ATTACK;
         end
         `FIN: begin
-            next_state = key_num == 1 ? `INIT : `FIN;
+            next_state = key_num == `SPACE ? `INIT : `FIN;
         end
         default: begin
             next_state = `INIT;
