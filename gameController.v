@@ -300,14 +300,9 @@ always @ (posedge clk) begin
     else if(state == `PLAYERA_ATTACK || state == `PLAYERB_ATTACK) begin
         if(key != prev_key) begin
             if(key == `ENTER) begin
-                if({map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]} != 4'b0000) begin
-                    {mask[!side][y * 48 + x * 4], mask[!side][y * 48 + x * 4 + 1], mask[!side][y * 48 + x * 4 + 2], mask[!side][y * 48 + x * 4 + 3]} <= {map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]};
+                {mask[!side][y * 48 + x * 4], mask[!side][y * 48 + x * 4 + 1], mask[!side][y * 48 + x * 4 + 2], mask[!side][y * 48 + x * 4 + 3]} <= {map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]};
                     {mask[side][y * 48 + x * 4], mask[side][y * 48 + x * 4 + 1], mask[side][y * 48 + x * 4 + 2], mask[side][y * 48 + x * 4 + 3]} <= {map[side][y * 48 + x * 4], map[side][y * 48 + x * 4 + 1], map[side][y * 48 + x * 4 + 2], map[side][y * 48 + x * 4 + 3]};
-                    actionDone <= 0;
-                end
-                else begin
-                    actionDone <= 1;
-                end
+                actionDone <= {map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]} != 4'b0000;
             end
             else
                 actionDone <= 0;
