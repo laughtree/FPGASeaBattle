@@ -16,7 +16,7 @@ module gameController(
 
 integer setShipCount;
 wire direction;
-wire winner;
+reg winner;
 
 reg [575:0] map [1:0];
 reg [575:0] mask [1:0];
@@ -55,6 +55,15 @@ always @ (*) begin
     end
     else begin
         side = 0;
+    end
+end
+
+always @ (posedge clk) begin
+    if(state == `FIN) begin
+        winner <= winner;
+    end
+    else begin
+        winner <= side;
     end
 end
 
