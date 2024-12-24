@@ -302,7 +302,7 @@ always @ (posedge clk) begin
             if(key == `ENTER) begin
                 {mask[!side][y * 48 + x * 4], mask[!side][y * 48 + x * 4 + 1], mask[!side][y * 48 + x * 4 + 2], mask[!side][y * 48 + x * 4 + 3]} <= {map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]};
                     {mask[side][y * 48 + x * 4], mask[side][y * 48 + x * 4 + 1], mask[side][y * 48 + x * 4 + 2], mask[side][y * 48 + x * 4 + 3]} <= {map[side][y * 48 + x * 4], map[side][y * 48 + x * 4 + 1], map[side][y * 48 + x * 4 + 2], map[side][y * 48 + x * 4 + 3]};
-                actionDone <= {map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]} != 4'b0000;
+                actionDone <= {map[!side][y * 48 + x * 4], map[!side][y * 48 + x * 4 + 1], map[!side][y * 48 + x * 4 + 2], map[!side][y * 48 + x * 4 + 3]} == 4'b0000;
             end
             else
                 actionDone <= 0;
