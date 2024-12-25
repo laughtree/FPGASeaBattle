@@ -2,7 +2,6 @@
 module keyTrans(
     input wire clk,
     input wire rst,
-    input wire state,
     inout PS2_CLK,
     inout PS2_DATA,
     output reg [3:0] key_num,
@@ -50,9 +49,5 @@ module keyTrans(
             end
         end
     end
-
-
-
-
 
 endmodule

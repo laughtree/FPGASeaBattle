@@ -33,7 +33,6 @@ module main(
     keyTrans KT(
         .clk(clk),
         .rst(rst),
-        .state(state),
         .PS2_CLK(PS2_CLK),
         .PS2_DATA(PS2_DATA),
         .key_num(key_num),
